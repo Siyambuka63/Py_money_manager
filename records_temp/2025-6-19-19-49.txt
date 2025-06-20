@@ -1,0 +1,36 @@
+
+2025-6-19, 19:49
+
+debts               | 	[Nothing]
+transport           | 	60.0 (30.0% of monthly income)
+parents             | 	[Nothing]
+groceries           | 	20.0 (10% of monthly income)
+electricity         | 	[Nothing]
+water_and_sewage    | 	[Nothing]
+wifi_and_data       | 	10.0 (5% of monthly income)
+medical_related     | 	[Nothing]
+insurance           | 	[Nothing]
+retirement          | 	[Nothing]
+school_fees         | 	[Nothing]
+tax                 | 	[Nothing]
+security            | 	[Nothing]
+emergency_funds     | 	20.0 (10% of monthly income)
+bond                | 	[Nothing]
+vehicle_payment     | 	[Nothing]
+retirement_fund     | 	[Nothing]
+stocks              | 	10.0 (5% of monthly income)
+real_estate         | 	[Nothing]
+crypto_currency     | 	10.0 (5% of monthly income)
+charity             | 	10.0 (5% of monthly income)
+restaurant          | 	[Nothing]
+fast_food           | 	10.0 (5% of monthly income)
+quick_cash          | 	10.0 (5% of monthly income)
+amusement           | 	[Nothing]
+hobbies             | 	[Nothing]
+snacks              | 	[Nothing]
+other               | 	[Nothing]
+__________________________________________________
+
+Total spendings: 	R 160.0 (80.0% of 200.0)
+Surplus: 			R 40.0
+__________________________________________________

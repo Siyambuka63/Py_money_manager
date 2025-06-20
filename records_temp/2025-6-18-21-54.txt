@@ -1,0 +1,17 @@
+
+2025-6-18, 21:54
+
+transport           | 	1500.0 (30.0% of monthly income)
+groceries           | 	500.0 (10% of monthly income)
+wifi_and_data       | 	250.0 (5% of monthly income)
+emergency_funds     | 	500.0 (10% of monthly income)
+stocks              | 	250.0 (5% of monthly income)
+crypto_currency     | 	250.0 (5% of monthly income)
+charity             | 	250.0 (5% of monthly income)
+fast_food           | 	250.0 (5% of monthly income)
+quick_cash          | 	250.0 (5% of monthly income)
+__________________________________________________
+
+Total spendings: 	R 4000.0 (80.0% of 5000.0)
+Surplus: 			R 1000.0
+__________________________________________________

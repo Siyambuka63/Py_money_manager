@@ -3,7 +3,7 @@ Money_manager.py
 ================
 
 Started: 12.06.25
-Updated: 19.06.25
+Updated: 20.06.25
 =================   
 """
 import colorama
@@ -49,18 +49,9 @@ class Money_manager():
 
 
     def unpack(self, salary:int | float) -> None: 
-        # print(f" {self.line}\n")
-        # # print("\n Money manager")
-        # print(f"\n {Fore.YELLOW}Split")
-        # print(f" - Needs: \t\tR {salary * needs}")
-        # print(f" - Investments: \tR {salary * investments}")
-        # print(f" - Personal: \t\tR {salary * personal}")
-        # print("\n Split ratio = [60:20:20]")
-        # print(f" {self.line}\n")
+        print(f"\n {Fore.YELLOW}SPENDINGS\n")
 
         percentage = 0 
-        print(f"\n {Fore.YELLOW}SPENDINGS\n")
-        # print("\n --- Spendings ---")
         for collection in [categories_needs, categories_investments, categories_personal]: 
             for k in collection:
                 while len(k) < 20:  
@@ -78,7 +69,6 @@ class Money_manager():
         surplus = round((salary - total_spendings), 2)
         print(f" {self.line}\n")
         print(f" Total spendings: \tR {total_spendings} ({percentage}% of {salary})")
-        # print(f" Surplus: \t\tR {salary - total_spendings}")
         print(f" Surplus: \t\tR {surplus}")
         print(f" {self.line}\n")
 
@@ -90,18 +80,8 @@ class Money_manager():
 
     def unpack_verbose(self, salary:int | float) -> None: 
         self.verbose_mode = True  
-
-        # print(f" {self.line}\n")
-        # # print("\n Money manager")
-        # print(f"\n {Fore.YELLOW}Split")
-        # print(f" - Needs: \t\tR {salary * needs}")
-        # print(f" - Investments: \tR {salary * investments}")
-        # print(f" - Personal: \t\tR {salary * personal}")
-        # print("\n Split ratio = [60:20:20]")
-        # print(f" {self.line}\n")
-    
-        # print(f"\n --- Spendings (verbose) ---")
         print(f"\n {Fore.YELLOW}SPENDINGS (verbose)\n")
+
         total_spendings = 0
         percentage = 0 
         count = 1
@@ -132,14 +112,12 @@ class Money_manager():
         surplus = round((salary - total_spendings), 2)
         print(f" {self.line}\n\n")
         print(f" Total spendings: \tR {total_spendings} ({percentage}% of {salary})")
-        # print(f" Surplus: \t\tR {salary - total_spendings}")
         print(f" Surplus: \t\tR {surplus}")
         print(f"\n {self.line}\n")
 
         ### saving to variable
         self.data += f"{self.line}\n"
         self.data += f"\nTotal spendings: \tR {total_spendings} ({percentage}% of {salary})"
-        # self.data += f"\nSurplus: \t\t\tR {salary - total_spendings}"
         self.data += f"\nSurplus: \t\t\tR {surplus}"
 
 
@@ -155,12 +133,10 @@ class Money_manager():
 
             except ValueError: 
                 print(f" {Fore.RED}Invalid input type")
-                # print(f" {Fore.RED}Invalid input type{Fore.RESET}")
                 print(" Enter a valid number or decimal value")
 
 
     def cli_app(self, verbose:bool) -> None: 
-
         ### Main app 
         banner()
         monthly_salary = self.get_salary()
@@ -210,13 +186,6 @@ class Money_manager():
         print("\n Open file? (y/n)")
         open_file = input(" > ")
         if open_file.lower() == "y":
-            # filename = f"records/verbose_2025-06-19-20-28.txt"
-
-            # wb.open("verbose_2025-06-19-20-28.txt") 
-            # wb.open("_notes.txt") 
-            
-            # wb.open(filename) 
-
             os.chdir("records")
             wb.open(f"{time_stamp}.txt") 
             # or 

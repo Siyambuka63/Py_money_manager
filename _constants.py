@@ -94,7 +94,7 @@ def banner() -> None:
 
     os.system("cls")
     colorama.init()
-    print(f"{Fore.YELLOW}{text1}{Fore.RESET}")
+    print(f"{Fore.YELLOW}{text}{Fore.RESET}")
     print(f" NOTE")
     print(f" Expenses and percentages can be altered in '{Fore.YELLOW}_constants.py{Fore.RESET}'\n")
 # ---------------------------------------
