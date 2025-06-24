@@ -171,11 +171,14 @@ class Money_manager():
         time_stamp = now.strftime("%Y-%m-%d-%H-%M")
         time_now = now.strftime("%Y-%m-%d %H:%M:%S") 
 
-        filename = f"records/{time_stamp}.txt"
-        if self.verbose_mode: 
-            filename = f"records/verbose_{time_stamp}.txt"
+        # filename = f"records/{time_stamp}.txt"
+        filename = f"{time_stamp}.txt"
 
-        with open(filename, "w") as writer: 
+        if self.verbose_mode: 
+            # filename = f"records/verbose_{time_stamp}.txt"
+            filename = f"verbose_{time_stamp}.txt"
+
+        with open(f"records/{filename}", "w") as writer: 
             writer.write(f"\nTime stamp: [{time_now}]\n\n")
             writer.write(self.data)
             writer.write(f"\n{self.line}")
@@ -187,7 +190,9 @@ class Money_manager():
         open_file = input(" > ")
         if open_file.lower() == "y":
             os.chdir("records")
-            wb.open(f"{time_stamp}.txt") 
+            # wb.open(f"{time_stamp}.txt") 
+            wb.open(filename) 
+
             # or 
             # os.system(f"start notepad.exe {filename}")
 # ----------------------------------------------

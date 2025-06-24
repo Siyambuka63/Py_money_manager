@@ -3,7 +3,7 @@ main.py
 =======
 
 Started: 13.06.25
-Updated: 15.06.25
+Updated: 24.06.25
 =================  
 """
 import sys 
@@ -20,24 +20,25 @@ def command_line_arg_handler(command_line_args:list, obj:Money_manager):
 
             elif len(command_line_args) > 2:
                 try: 
-                    income = int(command_line_args[2])
-                    if type(income) == int:
+                    income = float(command_line_args[2])
+                    if type(income) == float:
                         obj.unpack_verbose(income)
 
                 except ValueError: 
-                    print("Invalid input type for monthly-net-income")
+                    print("Invalid input type for monthly-net-income\n")
 
         ### Default mode 
         ### Only display important details
         else: 
             try: 
-                income = int(command_line_args[1])
-                if type(income) == int:
+                # income = int(command_line_args[1])
+                income = float(command_line_args[1])
+                if type(income) == float:
                     obj.unpack(income)
 
             except ValueError: 
                 print("Invalid input")
-                print("Add the appropriate value(s) for *verbose mode*, *monthly-net-income*, or both")
+                print("Add the appropriate value(s) for *verbose mode*, *monthly-net-income*, or both\n")
         # ========================================
 
     ### No CL args 
