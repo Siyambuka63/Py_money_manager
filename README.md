@@ -5,6 +5,8 @@ A simple command-line program to divide your monthly-net-salary into various
 customisable portions.<br> 
 Alterations can be made in '_constants.py'
 
+GitHub repo: https://github.com/ammaar0x01/Py_money_manager
+
 Language used: Python
 
 Developer: ammaar0x01
