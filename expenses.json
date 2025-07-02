@@ -1,0 +1,40 @@
+{
+  "categories_needs": {
+    "debts": 0,
+    "transport": 30.0,
+    "parents": 0,
+    "groceries": 10,
+    "electricity": 0,
+    "water_and_sewage": 0,
+    "wifi_and_data": 5,
+    "medical_related": 0,
+    "insurance": 0,
+    "retirement": 0,
+    "school_fees": 0,
+    "tax": 0,
+    "security": 0,
+    "emergency_funds": 10,
+    "bond": 0,
+    "vehicle_payment": 0,
+    "retirement_fund": 0
+  },
+  "categories_investments": {
+    "stocks": 5,
+    "real_estate": 0,
+    "crypto_currency": 5,
+    "charity": 5
+  },
+  "categories_personal": {
+    "restaurant": 0,
+    "fast_food": 5,
+    "quick_cash": 5,
+    "amusement": 0,
+    "hobbies": {
+      "piano": 0,
+      "fitness": 0,
+      "bicycle": 0
+    },
+    "snacks": 0,
+    "other": 0
+  }
+}

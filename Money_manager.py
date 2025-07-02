@@ -10,13 +10,14 @@ import colorama
 from colorama import Fore 
 from datetime import datetime
 import webbrowser as wb 
-import os 
+import os
+import json
 
 from _constants import * 
 # ----------------------
 
 
-class Money_manager(): 
+class Money_manager:
     """
     Contains methods used to manage and track expenses
 
@@ -26,7 +27,13 @@ class Money_manager():
     line = 50 * "_"
     data = ""
     monthly_salary = 0 
-    verbose_mode = False 
+    verbose_mode = False
+    percentage = 0
+
+    file_path = "expenses.json"
+
+    with open(file_path, "r") as file:
+        content = json.load(file)
 
     def __init__(self):
         colorama.init(autoreset=True)
@@ -37,88 +44,52 @@ class Money_manager():
         Checks the percentage value of all the expenses/transactions and surplus 
         and ensures that the total percentage is 100%
         '''
-        percentage = 0 
-        for collection in [categories_needs, categories_investments, categories_personal]: 
-            for k in collection:
-                if type(collection[k]) == int or type(collection[k]) == float: 
-                    percentage += collection[k]
 
-        if (percentage <= 100):
-            return True  
-        return False 
+        if self.percentage == 0:
+            self.get_percent(self.content)
+
+        return self.percentage <= 100
 
 
-    def unpack(self, salary:int | float) -> None: 
-        print(f"\n {Fore.YELLOW}SPENDINGS\n")
+    def get_percent(self, content):
+        if type(content) == dict:
+           for key, value in content.items():
+               self.get_percent(value)
+        elif content > 0:
+            self.percentage += content
 
-        percentage = 0 
-        for collection in [categories_needs, categories_investments, categories_personal]: 
-            for k in collection:
-                while len(k) < 20:  
-                    k += " "
 
-                if type(collection[k.strip()]) == int or type(collection[k.strip()]) == float: 
-                    ex1 = salary * (collection[k.strip()] / 100)
-                    print(f" {k}| \t{ex1} ({collection[k.strip()]}% of monthly income)\n")
-                    percentage += collection[k.strip()]
+    def unpack(self, salary:int | float) -> None:
+        self.data +=f"\n {Fore.YELLOW}SPENDINGS\n"
 
-                    ### saving to variable
-                    self.data += f"{k}| \t{ex1} ({collection[k.strip()]}% of monthly income)\n"
+        self.get_percent(self.content)
 
-        total_spendings = salary * (percentage / 100)
-        surplus = round((salary - total_spendings), 2)
-        print(f" {self.line}\n")
-        print(f" Total spendings: \tR {total_spendings} ({percentage}% of {salary})")
-        print(f" Surplus: \t\tR {surplus}")
-        print(f" {self.line}\n")
+        for key, value in self.content:
+            self.load_data(salary, key, value)
+
+        total_spending = salary * (self.percentage / 100)
+        surplus = round((salary - total_spending), 2)
 
         ### saving to variable
         self.data += f"{self.line}\n"
-        self.data += f"\nTotal spendings: \tR {total_spendings} ({percentage}% of {salary})"
-        self.data += f"\nSurplus: \t\t\tR {surplus}"
+        self.data += f"Total spendings: \tR {total_spending:.2f} ({self.percentage:.2f}% of {salary:.2f})\n"
+        self.data += f"Surplus: \t\t\tR {surplus}\n"
 
+        print(self.data)
 
-    def unpack_verbose(self, salary:int | float) -> None: 
-        self.verbose_mode = True  
-        print(f"\n {Fore.YELLOW}SPENDINGS (verbose)\n")
-
-        total_spendings = 0
-        percentage = 0 
-        count = 1
-        for collection in [categories_needs, categories_investments, categories_personal]: 
-            for k in collection:
-                print(f" #{count}")
-                while len(k) < 20:  
-                    k += " "
-                        
-                if type(collection[k.strip()]) == int or type(collection[k.strip()]) == float: 
-                    ex1 = salary * (collection[k.strip()] / 100)
-                    total_spendings += ex1 
-                    print(f" {k}| \t{Fore.YELLOW}{ex1} ({collection[k.strip()]}% of monthly income)")
-                    percentage += collection[k.strip()]
-                    
-                    ### saving to variable
-                    self.data += f"{k}| \t{ex1} ({collection[k.strip()]}% of monthly income)\n"
-
+    def load_data(self, salary, key, value):
+        if type(value) != dict:
+            if value > 0:
+                cost = salary * value / 100
+                if self.verbose_mode:
+                    self.data += f" {key}| \tR{Fore.YELLOW}{cost:.2f} ({value:.2f}% of monthly income)\n"
                 else:
-                    print(f" {k}| \t[Nothing]")
-                    
-                    ### saving to variable
-                    self.data += f"{k}| \t[Nothing]\n"
-                print()
-                count += 1
-
-        total_spendings = salary * (percentage / 100)
-        surplus = round((salary - total_spendings), 2)
-        print(f" {self.line}\n\n")
-        print(f" Total spendings: \tR {total_spendings} ({percentage}% of {salary})")
-        print(f" Surplus: \t\tR {surplus}")
-        print(f"\n {self.line}\n")
-
-        ### saving to variable
-        self.data += f"{self.line}\n"
-        self.data += f"\nTotal spendings: \tR {total_spendings} ({percentage}% of {salary})"
-        self.data += f"\nSurplus: \t\t\tR {surplus}"
+                    self.data += f"{key}| \tR{cost:.2f} ({value:.2f}% of your income)\n"
+        else:
+            self.data += f"{key}"
+            self.data += self.line
+            for key, value in value.items():
+                self.load_data(salary, key, value)
 
 
     def get_salary(self) -> int | float:
@@ -195,4 +166,5 @@ class Money_manager():
 
             # or 
             # os.system(f"start notepad.exe {filename}")
+
 # ----------------------------------------------
