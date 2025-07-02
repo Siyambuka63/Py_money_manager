@@ -24,7 +24,7 @@ class Money_manager:
     Using the 60:20:20 split, but the ratio can be adjusted
     """
 
-    line = 50 * "_"
+    line = "\n" + 50 * "_" + "\n"
     data = ""
     monthly_salary = 0 
     verbose_mode = False
@@ -60,36 +60,35 @@ class Money_manager:
 
 
     def unpack(self, salary:int | float) -> None:
-        self.data +=f"\n {Fore.YELLOW}SPENDINGS\n"
+        self.data +=f"\n {Fore.YELLOW}SPENDINGS"
 
         self.get_percent(self.content)
 
-        for key, value in self.content:
-            self.load_data(salary, key, value)
+        self.load_data(salary, self.content)
 
         total_spending = salary * (self.percentage / 100)
         surplus = round((salary - total_spending), 2)
 
         ### saving to variable
-        self.data += f"{self.line}\n"
+        self.data += f"{self.line}"
         self.data += f"Total spendings: \tR {total_spending:.2f} ({self.percentage:.2f}% of {salary:.2f})\n"
         self.data += f"Surplus: \t\t\tR {surplus}\n"
 
         print(self.data)
 
-    def load_data(self, salary, key, value):
+    def load_data(self, salary, value, key = ""):
         if type(value) != dict:
             if value > 0:
                 cost = salary * value / 100
                 if self.verbose_mode:
-                    self.data += f" {key}| \tR{Fore.YELLOW}{cost:.2f} ({value:.2f}% of monthly income)\n"
+                    self.data += f" {key} \t| \tR{Fore.YELLOW}{cost:.2f} ({value:.2f}% of monthly income)\n"
                 else:
-                    self.data += f"{key}| \tR{cost:.2f} ({value:.2f}% of your income)\n"
+                    self.data += f"{key} \t| \tR{cost:.2f} ({value:.2f}% of your income)\n"
         else:
-            self.data += f"{key}"
+            self.data += f"\n{key}"
             self.data += self.line
             for key, value in value.items():
-                self.load_data(salary, key, value)
+                self.load_data(salary, value, key)
 
 
     def get_salary(self) -> int | float:
@@ -120,10 +119,7 @@ class Money_manager:
         print("\n Split ratio = [60:20:20]")
         print(f" {self.line}\n")
 
-        if verbose: 
-            self.unpack_verbose(monthly_salary)
-        else: 
-            self.unpack(monthly_salary)
+        self.unpack(monthly_salary)
 
         ### Save data to text file 
         print("\n Save the data to a text file? (y/n)")
