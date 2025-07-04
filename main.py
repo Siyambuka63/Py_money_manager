@@ -7,11 +7,11 @@ Updated: 24.06.25
 =================  
 """
 import sys 
-from Money_manager import Money_manager 
+from moneymanager import MoneyManager
 # --------------------------------------
 
 
-def command_line_arg_handler(command_line_args:list, obj:Money_manager): 
+def command_line_arg_handler(command_line_args:list, obj:MoneyManager):
     if len(command_line_args) > 1:
         ### Verbose mode 
         if command_line_args[1].lower() in ["true", "verbose", "verbose-mode", "verbose mode", "v"]: 
@@ -21,8 +21,9 @@ def command_line_arg_handler(command_line_args:list, obj:Money_manager):
             elif len(command_line_args) > 2:
                 try: 
                     income = float(command_line_args[2])
+                    obj.monthly_salary = income
                     if type(income) == float:
-                        obj.unpack_verbose(income)
+                        obj.unpack(verbose=True)
 
                 except ValueError: 
                     print("Invalid input type for monthly-net-income\n")
@@ -33,8 +34,9 @@ def command_line_arg_handler(command_line_args:list, obj:Money_manager):
             try: 
                 # income = int(command_line_args[1])
                 income = float(command_line_args[1])
+                obj.monthly_salary = income
                 if type(income) == float:
-                    obj.unpack(income)
+                    obj.unpack(verbose=False)
 
             except ValueError: 
                 print("Invalid input")
@@ -47,10 +49,9 @@ def command_line_arg_handler(command_line_args:list, obj:Money_manager):
 
 # --------------------------------------
 def main(): 
-    obj = Money_manager()
+    obj = MoneyManager()
     if obj.check_percentages():
         command_line_arg_handler(command_line_args=sys.argv, obj=obj)
-
     else:
         print("Invalid percentages. Overall percentage exceeds 100%")
         print("\n  ***Invalid percentages in data-structure(s)***")
