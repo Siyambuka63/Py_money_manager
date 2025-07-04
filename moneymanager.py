@@ -92,7 +92,7 @@ class MoneyManager:
 
     def load_expenses(self, value, key = ""):
         if type(value) != dict:
-            print(f" {key}| \t ({value:.2f}% of monthly income)\n")
+            print(f" {key}| \t ({value:.2f}% of monthly income)")
         else:
             print(f"\n{key}")
             print(self.line)
@@ -153,12 +153,12 @@ class MoneyManager:
             for key, value in self.content.items():
                 for k in value.keys():
                     if k == expense:
-                        flag = True
-                        print(f"Changed {k} from {self.content[key][k]:.2f}% to {percentage:.2f}%")
+                        print(f"Changed {k} from {self.content[key][k]:.2f}% to {percentage:.2f}%\n")
                         self.content[key][k] = round(percentage, 2)
                         with open(self.file_path, "w") as file:
                             json.dump(self.content, file, indent = 4)
                         break
+            self.option = ""
             self.menu(verbose)
         else:
             print("You entered an invalid option")
