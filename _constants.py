@@ -12,10 +12,6 @@ import colorama
 from colorama import Fore 
 # --------------------
 
-needs = 0.6         # yellow 
-investments = 0.2   # blue  
-personal = 0.2      # yellow
-
 def banner() -> None: 
     # from https://fsymbols.com/generators/carty/
     # ========================================= # 
