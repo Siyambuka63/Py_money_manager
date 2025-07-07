@@ -1,52 +1,25 @@
 import json
 
-#ToDo Add singleton
+from textfilehandler import save_data
+
+
 class ExpenseHandler:
-    line = 50 * "_"
-
-    file_path = "expenses.json"
-    with open(file_path, "r") as file:
-        content = json.load(file)
-
-    percentage = 0
+    ### Singleton
+    def __new__(cls):
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(ExpenseHandler, cls).__new__(cls)
+        return cls.instance
 
     def __init__(self):
+        self.line = 50 * "_"
+        self.data = ""
+
+        self.file_path = "expenses.json"
+        with open(self.file_path, "r") as file:
+            self.content = json.load(file)
+
+        self.percentage = 0
         self.get_percent(self.content)
-
-    def edit_expense(self):
-        expense = input("\n Enter expense: ")
-
-        flag = False
-        for value in self.content.values():
-            for v in value.keys():
-                if v == expense:
-                    flag = True
-                    break
-
-        if flag:
-            print(f" Your total is {self.percentage:.2f}%")
-            percentage = int(input(" Enter the new percentage: "))
-            for key, value in self.content.items():
-                for k in value.keys():
-                    if k == expense:
-                        if self.is_valid_percentage(percentage, self.content[key][k]):
-                            print(f" Changed {k} from {self.content[key][k]:.2f}% to {percentage:.2f}%\n")
-                            self.content[key][k] = round(percentage, 2)
-                            with open(self.file_path, "w") as file:
-                                json.dump(self.content, file, indent=4)
-                        else:
-                            print(f" Changing {k} from {self.content[key][k]:.2f}% to {percentage:.2f}% will make the percent total exceed 100%\n")
-                            self.edit_expense()
-                        break
-
-    def load_expenses(self, value, key=""):
-        if type(value) != dict:
-            print(f" {key}| \t ({value:.2f}% of monthly income)")
-        else:
-            print(f"\n{key}")
-            print(self.line)
-            for key, value in value.items():
-                self.load_expenses(value, key)
 
     def get_percent(self, content):
         if type(content) == dict:
@@ -55,6 +28,44 @@ class ExpenseHandler:
         elif content > 0:
             self.percentage += content
 
+    def load_expenses(self, value, key=""):
+        if type(value) != dict:
+            print(f" {key}| \t ({value:.2f}% of monthly income)")
+        else:
+            print(f"\n {key}")
+            print(self.line)
+            for key, value in value.items():
+                self.load_expenses(value, key)
+
+    def edit_expense(self):
+        expense = input("\n Enter expense: ")
+
+        if self.is_valid_expense(expense):
+            print(f" Your total is {self.percentage:.2f}%")
+            percentage = int(input(" Enter the new percentage: "))
+            for key, value in self.content.items():
+                    if expense in value.keys():
+                        # Checks if the entered value won't make the total percentage exceed 100
+                        if self.is_valid_percentage(percentage, self.content[key][expense]):
+                            print(f" Changed {expense} from {self.content[key][expense]:.2f}% to {percentage:.2f}%\n")
+                            self.content[key][expense] = round(percentage, 2)
+                            with open(self.file_path, "w") as file:
+                                json.dump(self.content, file, indent=4)
+                        else:
+                            print(f" Changing {expense} from {self.content[key][expense]:.2f}% to {percentage:.2f}% will make the percent total exceed 100%\n")
+                            self.edit_expense()
+                        break
+
+    def is_valid_expense(self, expense):
+        flag = False
+
+        for value in self.content.values():
+            if expense in value.keys():
+                flag = True
+                break
+
+        return flag
+
     def is_valid_percentage(self, new_percentage, old_percentage):
         if 100 >= self.percentage - old_percentage + new_percentage:
             self.percentage = self.percentage - old_percentage + new_percentage
@@ -62,6 +73,18 @@ class ExpenseHandler:
         else:
             return False
 
+    def save_expenses(self, value, key = ""):
+        if type(value) != dict:
+            self.data += f" {key}| \t ({value:.2f}% of monthly income)\n"
+        else:
+            self.data += f" \n{key}\n"
+            self.data += self.line + "\n"
+            for key, value in value.items():
+                self.save_expenses(value, key)
+
     def main(self):
         self.load_expenses(self.content)
         self.edit_expense()
+        self.data = ""
+        self.save_expenses(self.content)
+        save_data(data=self.data, directory="expenses", verbose=False)

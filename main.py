@@ -13,21 +13,21 @@ from salaryhandler import SalaryHandler
 
 
 def command_line_arg_handler(command_line_args:list):
-    monman = MoneyManager()
-    salman = SalaryHandler()
+    money_manager = MoneyManager()
+    salary_handler = SalaryHandler()
     
     if len(command_line_args) > 1:
         ### Verbose mode 
         if command_line_args[1].lower() in ["true", "verbose", "verbose-mode", "verbose mode", "v"]: 
             if len(command_line_args) == 2:
-                salman.main(verbose=True)
+                salary_handler.main(verbose=True)
 
             elif len(command_line_args) > 2:
                 try: 
                     income = float(command_line_args[2])
-                    salman.monthly_salary = income
+                    salary_handler.monthly_salary = income
                     if type(income) == float:
-                        salman.unpack(verbose=True)
+                        salary_handler.unpack(verbose=True)
 
                 except ValueError: 
                     print("Invalid input type for monthly-net-income\n")
@@ -38,9 +38,9 @@ def command_line_arg_handler(command_line_args:list):
             try: 
                 # income = int(command_line_args[1])
                 income = float(command_line_args[1])
-                salman.monthly_salary = income
+                salary_handler.monthly_salary = income
                 if type(income) == float:
-                    salman.unpack(verbose=False)
+                    salary_handler.unpack(verbose=False)
 
             except ValueError: 
                 print("Invalid input")
@@ -49,7 +49,7 @@ def command_line_arg_handler(command_line_args:list):
 
     ### No CL args 
     else: 
-        monman.cli_app()
+        money_manager.cli_app()
 
 # --------------------------------------
 def main(): 
